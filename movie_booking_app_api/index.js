@@ -2,15 +2,17 @@ const http = require('http')
 const connectMongoDB = require('./models/index')
 const expressApplication = require('./app')
 
-const PORT = process.env.PORT ?? 8000
+require('dotenv').config()
+
+const port = process.env.PORT ?? 8000
 
 async function init() {
     try {
         await connectMongoDB(process.env.MONGODB_URI)
         const server = http.createServer(expressApplication)
 
-        server.listen(PORT, () => {
-            console.log(`Server started on port ${PORT}`)
+        server.listen(port, () => {
+            console.log(`Server started on port ${port}`)
         })
     } catch (error) {
         console.log(`Error starting server`, error)
