@@ -1,3 +1,33 @@
 movie_booking_app_api/node_modules/
 movie_booking_app_api/.env
 movie_booking_app_api/package-lock.json
+
+
+
+
+
+for client
+# Logs
+movie_booking_app_client/logs
+movie_booking_app_client/*.log
+movie_booking_app_client/npm-debug.log*
+movie_booking_app_client/yarn-debug.log*
+movie_booking_app_client/yarn-error.log*
+movie_booking_app_client/pnpm-debug.log*
+movie_booking_app_client/lerna-debug.log*
+
+movie_booking_app_client/node_modules
+movie_booking_app_client/dist
+movie_booking_app_client/dist-ssr
+movie_booking_app_client/*.local
+
+# Editor directories and files
+movie_booking_app_client/.vscode/*
+movie_booking_app_client/!.vscode/extensions.json
+movie_booking_app_client/.idea
+movie_booking_app_client/.DS_Store
+movie_booking_app_client/*.suo
+movie_booking_app_client/*.ntvs*
+movie_booking_app_client/*.njsproj
+movie_booking_app_client/*.sln
+movie_booking_app_client/*.sw?
