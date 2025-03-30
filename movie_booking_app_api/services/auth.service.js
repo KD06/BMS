@@ -53,7 +53,16 @@ class AuthService {
             _is: user.id,
             role: user.role,
         })
-        return token
+        return { status: 'success', data: { token } }
+    }
+
+    static async decodeUserToken(token) {
+        try {
+            const payload = JWT.verify(token, JWT_SECRET)
+            return payload
+        } catch (error) {
+            return false
+        }
     }
 }
 

@@ -58,7 +58,13 @@ async function handleSignin(req, res) {
     }
 }
 
+function handleMe(req, res) {
+    if (!req.user) return res.json({ isLoggedIn: false })
+    return res.json({ isLoggedIn: true, data: { user: req.user } })
+}
+
 module.exports = {
     handleSignup,
     handleSignin,
+    handleMe,
 }
