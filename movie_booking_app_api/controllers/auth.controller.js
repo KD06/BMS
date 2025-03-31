@@ -3,6 +3,7 @@ const {
     userSignupValidationSchema,
     userSigninValidationSchema,
 } = require('../lib/validators/auth.validator')
+const User = require('../models/user.model')
 const AuthService = require('../services/auth.service')
 
 async function handleSignup(req, res) {
@@ -58,9 +59,17 @@ async function handleSignin(req, res) {
     }
 }
 
-function handleMe(req, res) {
+async function handleMe(req, res) {
     if (!req.user) return res.json({ isLoggedIn: false })
-    return res.json({ isLoggedIn: true, data: { user: req.user } })
+
+    const user = await User.findById(req.user._id).select({
+        firstname: true,
+        lastname: true,
+        email: true,
+        role: true,
+    })
+
+    return res.json({ isLoggedIn: true, data: { user } })
 }
 
 module.exports = {

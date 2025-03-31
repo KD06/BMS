@@ -30,10 +30,7 @@ const SignupPage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("Inside handleFormSubmit");
     if (!isConfirmPasswordMatch) return;
-
-    console.log("Inside handleFormSubmit: Creating User");
     await signupAsync({ firstname, lastname, email, password });
   };
 
