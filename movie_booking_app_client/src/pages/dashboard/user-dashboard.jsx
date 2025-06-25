@@ -4,7 +4,7 @@ import { useGetAllMovies } from "../../hooks/movie.hooks";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import { useGetShowsByMovieId } from "../../hooks/theatre.hook";
 import moment from "moment";
-import "./user.css";
+import "./user.styles.css";
 import { useMemo } from "react";
 
 import useRazorpay from "react-razorpay";

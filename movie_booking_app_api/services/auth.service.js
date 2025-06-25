@@ -7,8 +7,6 @@ require('dotenv').config()
 
 const JWT_SECRET = process.env?.JWT_SECRET
 
-console.log('$$$$$$$$$$$$$$$$$$$$$$', JWT_SECRET)
-console.log('#################', process.env)
 if (!JWT_SECRET || JWT_SECRET === '')
     throw new AppError('JWT_SECRET env is required')
 class AuthService {
@@ -53,13 +51,13 @@ class AuthService {
         }
 
         const token = AuthService.generateUserToken({
-            _is: user.id,
+            _id: user.id,
             role: user.role,
         })
         return { status: 'success', data: { token } }
     }
 
-    static async decodeUserToken(token) {
+    static decodeUserToken(token) {
         try {
             const payload = JWT.verify(token, JWT_SECRET)
             return payload

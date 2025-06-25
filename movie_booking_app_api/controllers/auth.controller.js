@@ -22,7 +22,7 @@ async function handleSignup(req, res) {
             password,
         })
         return res.status(201).json({ status: 'success', data: { token } })
-    } catch (err) {
+    } catch (error) {
         return res
             .status(500)
             .json({ status: 'error', error: 'Internal Server Error' })
@@ -62,13 +62,14 @@ async function handleSignin(req, res) {
 async function handleMe(req, res) {
     if (!req.user) return res.json({ isLoggedIn: false })
 
+    console.log('err------------------->', req.user, req.user._id)
     const user = await User.findById(req.user._id).select({
         firstname: true,
         lastname: true,
         email: true,
         role: true,
     })
-
+    console.log('###', user)
     return res.json({ isLoggedIn: true, data: { user } })
 }
 

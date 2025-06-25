@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 // Tabs
-// import CreateTheatreTab from "./components/admin/create-theatre";
+import CreateTheatreTab from "./components/admin/create-theatre";
 
-import "./admin.style.css";
-// import CreateMovieTab from "./components/admin/create-movie";
-// import CreateTheatreHallTab from "./components/admin/create-thatre-hall";
-// import CreateShowTab from "./components/admin/create-show";
+import "./admin.styles.css";
+import CreateMovieTab from "./components/admin/create-movie";
+import CreateTheatreHallTab from "./components/admin/create-thatre-hall";
+import CreateShowTab from "./components/admin/create-show";
 
 const AdminDashboard = () => {
   const [selectedTab, setSelectedTab] = useState("create-theatre");
@@ -34,11 +34,10 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div className="main-content">
-        Loading...!
-        {/* {selectedTab === "create-theatre" && <CreateTheatreTab />}
+        {selectedTab === "create-theatre" && <CreateTheatreTab />}
         {selectedTab === "create-theatre-halls" && <CreateTheatreHallTab />}
         {selectedTab === "create-movie" && <CreateMovieTab />}
-        {selectedTab === "create-show" && <CreateShowTab />} */}
+        {selectedTab === "create-show" && <CreateShowTab />}
       </div>
     </div>
   );
