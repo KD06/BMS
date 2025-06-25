@@ -1,0 +1,29 @@
+.user_dashboard_container {
+  display: flex;
+  gap: 10px;
+}
+.seats_container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.seats_container span {
+  border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+.seats_container span:hover {
+  background-color: greenyellow;
+}
+.seats_container .selected-seat {
+  background-color: green;
+  color: white;
+}
+button {
+  background: lightskyblue;
+}

@@ -1,0 +1,39 @@
+.admin-dashboard-container {
+  width: 100vw;
+  min-height: 100vh;
+
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  line-height: 25px;
+}
+
+.main-content {
+  width: 100%;
+  min-height: 100vh;
+  padding: 10px;
+}
+
+.sidebar .sidebar-item {
+  margin-top: 10px;
+}
+
+.sidebar .sidebar-item ul {
+  list-style: none;
+}
+
+.sidebar .sidebar-item ul li {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.sidebar .sidebar-item ul li:hover {
+  background: #333333;
+}

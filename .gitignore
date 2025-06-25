@@ -31,3 +31,5 @@ movie_booking_app_client/*.ntvs*
 movie_booking_app_client/*.njsproj
 movie_booking_app_client/*.sln
 movie_booking_app_client/*.sw?
+
+movie_booking_app_client/.vite/*

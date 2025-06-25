@@ -2,7 +2,99 @@
   "hash": "16e14c30",
   "configHash": "9ca14978",
   "lockfileHash": "8633e94b",
-  "browserHash": "79992c52",
-  "optimized": {},
-  "chunks": {}
+  "browserHash": "839bfd81",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "f909b92b",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "e8b3063a",
+      "needsInterop": true
+    },
+    "@tanstack/react-query": {
+      "src": "../../node_modules/@tanstack/react-query/build/modern/index.js",
+      "file": "@tanstack_react-query.js",
+      "fileHash": "2aed2681",
+      "needsInterop": false
+    },
+    "@tanstack/react-query-devtools": {
+      "src": "../../node_modules/@tanstack/react-query-devtools/build/modern/index.js",
+      "file": "@tanstack_react-query-devtools.js",
+      "fileHash": "4e55dfd3",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "4239f029",
+      "needsInterop": false
+    },
+    "@mui/material/Button": {
+      "src": "../../node_modules/@mui/material/esm/Button/index.js",
+      "file": "@mui_material_Button.js",
+      "fileHash": "9324aae3",
+      "needsInterop": false
+    },
+    "@mui/material": {
+      "src": "../../node_modules/@mui/material/esm/index.js",
+      "file": "@mui_material.js",
+      "fileHash": "510181db",
+      "needsInterop": false
+    },
+    "@mui/material/TextField": {
+      "src": "../../node_modules/@mui/material/esm/TextField/index.js",
+      "file": "@mui_material_TextField.js",
+      "fileHash": "fa2a6a93",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "6f38e905",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "VONRGPZ6-OLY7V5BV": {
+      "file": "VONRGPZ6-OLY7V5BV.js"
+    },
+    "2QQPFIXG-MRYNZVNX": {
+      "file": "2QQPFIXG-MRYNZVNX.js"
+    },
+    "chunk-XCKW2RWP": {
+      "file": "chunk-XCKW2RWP.js"
+    },
+    "chunk-CXYAJK5W": {
+      "file": "chunk-CXYAJK5W.js"
+    },
+    "chunk-J7GJAASP": {
+      "file": "chunk-J7GJAASP.js"
+    },
+    "chunk-2PYSCZNV": {
+      "file": "chunk-2PYSCZNV.js"
+    },
+    "chunk-3LQD3CW5": {
+      "file": "chunk-3LQD3CW5.js"
+    },
+    "chunk-GU6V7JDC": {
+      "file": "chunk-GU6V7JDC.js"
+    },
+    "chunk-NX324PME": {
+      "file": "chunk-NX324PME.js"
+    },
+    "chunk-ECWOLUX3": {
+      "file": "chunk-ECWOLUX3.js"
+    },
+    "chunk-Z4L4S4OG": {
+      "file": "chunk-Z4L4S4OG.js"
+    },
+    "chunk-WOOG5QLI": {
+      "file": "chunk-WOOG5QLI.js"
+    }
+  }
 }

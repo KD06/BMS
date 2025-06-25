@@ -3,9 +3,12 @@ const JWT = require('jsonwebtoken')
 const User = require('../models/user.model')
 const { hash } = require('../utils/hash')
 const AppError = require('../errors/app.error')
+require('dotenv').config()
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env?.JWT_SECRET
 
+console.log('$$$$$$$$$$$$$$$$$$$$$$', JWT_SECRET)
+console.log('#################', process.env)
 if (!JWT_SECRET || JWT_SECRET === '')
     throw new AppError('JWT_SECRET env is required')
 class AuthService {
