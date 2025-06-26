@@ -3,7 +3,7 @@ const {
     createTheatreValidationSchema,
     createTheatreHallSchema,
     createTheatreHallMovieMappingSchema,
-} = require('../lib/validators/theatre.validtors')
+} = require('../lib/validators/theater.validator')
 
 async function getAllTheatres(req, res) {
     const theatres = await TheatreService.getAll()

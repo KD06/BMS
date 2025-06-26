@@ -1,24 +1,30 @@
 const express = require('express')
-const controller = require('../controllers/theater.controller')
+const theatreController = require('../controllers/theater.controller')
 const movieController = require('../controllers/movie.controller')
 const { restrictToRole } = require('../middlewares/auth.middleware')
 
 const router = express.Router()
+
 router.use(restrictToRole('admin'))
 
 // Theatre
-router.get('/theatres', controller.getAllTheatres)
-router.get('/theatres/:id', controller.getTheatreById)
-router.post('/theatres', controller.createTheatre)
+router.get('/theatres', theatreController.getAllTheatres)
+router.get('/theatres/:id', theatreController.getTheatreById)
+router.post('/theatres', theatreController.createTheatre)
 router.patch('/theatres/:id')
 router.delete('/theatres/:id')
 
 // Theatre Halls
-router.get('/theatres/:theatreId/halls')
-router.post('/theatres/:theatreId/halls')
+router.get(
+    '/theatres/:theatreId/halls',
+    theatreController.getTheatreHallsByTheatreId
+)
+router.post('/theatres/halls', theatreController.createTheatreHall)
 
-// Movies
-router.get('/movies', movieController.getAllMovies)
+// Theatre Halls Movie Mapping
+router.post('/shows', theatreController.createShow)
+
+// Movie
 router.get('/movies/:id', movieController.getMovieById)
 router.post('/movies', movieController.createMovie)
 router.patch('/movies/:id')
