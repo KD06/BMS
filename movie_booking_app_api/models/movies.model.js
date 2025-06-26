@@ -1,25 +1,25 @@
 const { Schema, model } = require('mongoose')
 
 const moviesSchema = new Schema(
-  {
-    title: {
-      type: String,
-      required: true,
+    {
+        title: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+        },
+        language: {
+            type: String,
+        },
+        imageURL: {
+            type: String,
+        },
+        durationInMinutes: {
+            type: Number,
+        },
     },
-    description: {
-      type: String,
-    },
-    language: {
-      type: String,
-    },
-    imageURL: {
-      type: String,
-    },
-    durationInMinutes: {
-      type: Number,
-    },
-  },
-  { timestamps: true }
+    { timestamps: true }
 )
 
 const Movie = model('movie', moviesSchema)

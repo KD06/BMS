@@ -21,7 +21,4 @@ const userSigninValidationSchema = z.object({
     password: z.string(),
 })
 
-module.exports = {
-    userSignupValidationSchema,
-    userSigninValidationSchema,
-}
+module.exports = { userSignupValidationSchema, userSigninValidationSchema }

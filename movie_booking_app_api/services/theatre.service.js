@@ -4,7 +4,7 @@ const TheatreHallMovieMapping = require('../models/theatre-hall-movie-mapping')
 const {
     createTheatreValidationSchema,
     createTheatreHallSchema,
-} = require('../lib/validators/theatre.validtors')
+} = require('../lib/validators/theater.validator')
 
 class TheatreService {
     /**

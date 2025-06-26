@@ -1,7 +1,7 @@
 const MovieService = require('../services/movie.service')
 const {
     createMovieValidationSchema,
-} = require('../lib/validators/movie.validators')
+} = require('../lib/validators/movie.validator')
 
 async function getAllMovies(req, res) {
     const movies = await MovieService.getAll()
@@ -38,5 +38,4 @@ async function createMovie(req, res) {
 
     return res.status(201).json({ status: 'success', data: movie })
 }
-
 module.exports = { getAllMovies, createMovie, getMovieById }
