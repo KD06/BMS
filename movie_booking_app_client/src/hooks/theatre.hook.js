@@ -83,7 +83,6 @@ export const useGetShowsByMovieId = (movieId) => {
     enabled: !!movieId,
     queryFn: async function () {
       const { data } = await apiInstance.get(`/api/shows/${movieId}`);
-
       return data.data;
     },
   });

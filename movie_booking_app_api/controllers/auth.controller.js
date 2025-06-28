@@ -3,7 +3,7 @@ const User = require('../models/user.model')
 const {
     userSignupValidationSchema,
     userSigninValidationSchema,
-} = require('../lib/validators/auth.validators')
+} = require('../lib/validators/auth.validator')
 const AuthService = require('../services/auth.service')
 
 async function handleSignup(req, res) {

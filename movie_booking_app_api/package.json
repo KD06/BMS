@@ -4,7 +4,7 @@
     "description": "Moview Booking App api's",
     "main": "index.js",
     "scripts": {
-        "start": "node index",
+        "start": "node -r dotenv/config index",
         "dev": "nodemon -r dotenv/config index"
     },
     "author": "",

@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { useLoggedInUser } from "../../hooks/auth.hooks";
 import { useGetAllMovies } from "../../hooks/movie.hooks";
-import { Card, CardContent, Typography, Button } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  CardMedia,
+} from "@mui/material";
 import { useGetShowsByMovieId } from "../../hooks/theatre.hook";
 import moment from "moment";
 import "./user.styles.css";
@@ -68,6 +74,12 @@ const UserDashboard = () => {
               onClick={() => setSelectedMovieId(movie._id)}
             >
               <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  component="img"
+                  height="194"
+                  image={movie.imageURL}
+                  alt="Image not Available"
+                />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {movie.title}
@@ -94,12 +106,12 @@ const UserDashboard = () => {
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {moment(show.startTimestamp).format(
-                        "DD/MM/YY [at] hh:mm A"
+                        "ddd DD MMM YY [at] hh:mm A"
                       )}{" "}
                       to
                       <br />
                       {moment(show.endTimestamp).format(
-                        "DD/MM/YY [at] hh:mm A"
+                        "ddd DD MMM YY [at] hh:mm A"
                       )}
                     </Typography>
                     <Typography gutterBottom variant="h5" component="div">
