@@ -30,6 +30,7 @@ async function handleCreateBooking(req, res) {
 
     if (!hall) return res.status(400).json({ error: 'Invalid Hall' })
 
+    // ### uncomment after testing
     //   if (show.startTimestamp <= Date.now()) {
     //     return res.status(400).json({ error: 'Show already started' })
     //   }

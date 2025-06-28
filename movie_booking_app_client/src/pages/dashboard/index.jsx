@@ -16,7 +16,6 @@ const DashboardPage = () => {
   }, [isLoading, navigate, user]);
 
   if (isLoading) return <h1>Loading...</h1>;
-
   return (
     <>
       {user.role === "admin" && <AdminDashboard />}
