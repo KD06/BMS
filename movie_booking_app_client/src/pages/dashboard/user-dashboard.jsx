@@ -41,9 +41,8 @@ const UserDashboard = () => {
       seatNumber: selectedSeat,
     });
     const order = data.order;
-
     const options = {
-      key: "rzp_test_SOzicN4cTTzIuG",
+      key: "rzp_test_8wNFpjIOoobhVK",
       amount: order.amount,
       currency: order.currency,
       name: "BookingMyShow",
@@ -99,7 +98,10 @@ const UserDashboard = () => {
             {shows?.map((show) => (
               <div
                 style={{ marginTop: "10px" }}
-                onClick={() => setSelectedShowId(show._id)}
+                onClick={() => {
+                  setSelectedShowId(show._id);
+                  setSelectedSeat(null);
+                }}
                 key={show._id}
               >
                 <Card sx={{ maxWidth: 345 }}>

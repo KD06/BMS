@@ -42,15 +42,21 @@ async function handleCreateBooking(req, res) {
 
     if (alreadyBooked)
         return res.status(400).json({ error: 'Seat is already booked' })
-
-    const order = await razorpay.orders.create({
-        amount: show.price * 100,
-        currency: 'INR',
-        notes: {
-            seatNumber,
-            showId,
-        },
-    })
+    let order
+    try {
+        order = await razorpay.orders.create({
+            amount: show.price * 100,
+            currency: 'INR',
+            notes: {
+                seatNumber,
+                showId,
+            },
+            receipt: `receipt_${Date.now()}`,
+        })
+    } catch (err) {
+        console.error(err)
+        res.status(500).send('Something went wrong')
+    }
 
     return res.json({ order: order })
 }
