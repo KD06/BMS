@@ -12,6 +12,7 @@ import { useGetShowsByMovieId } from "../../hooks/theatre.hook";
 import moment from "moment";
 import "./user.styles.css";
 import { useMemo } from "react";
+import Stack from "@mui/material/Stack";
 
 import useRazorpay from "react-razorpay";
 import { apiInstance } from "../../api";
@@ -72,7 +73,10 @@ const UserDashboard = () => {
               key={movie._id}
               onClick={() => setSelectedMovieId(movie._id)}
             >
-              <Card sx={{ maxWidth: 345 }}>
+              <Card
+                sx={{ maxWidth: 345 }}
+                className={selectedMovieId === movie._id ? "selected-card" : ""}
+              >
                 <CardMedia
                   component="img"
                   height="194"
@@ -104,7 +108,10 @@ const UserDashboard = () => {
                 }}
                 key={show._id}
               >
-                <Card sx={{ maxWidth: 345 }}>
+                <Card
+                  sx={{ maxWidth: 345 }}
+                  className={selectedShowId === show._id ? "selected-card" : ""}
+                >
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {moment(show.startTimestamp).format(
@@ -137,7 +144,9 @@ const UserDashboard = () => {
             {new Array(showObj.theatreHallId.seatingCapacity)
               .fill(1)
               .map((seat, index) => (
-                <span
+                <Button
+                  variant="outlined"
+                  disabled={true}
                   className={
                     index + 1 === selectedSeat ? "selected-seat" : null
                   }
@@ -145,24 +154,26 @@ const UserDashboard = () => {
                   key={index}
                 >
                   {index + 1}
-                </span>
+                </Button>
               ))}
           </div>
         )}
-        {selectedSeat && (
-          <Button
-            onClick={() => setSelectedSeat(null)}
-            color="error"
-            variant="outlined"
-          >
-            Clear
-          </Button>
-        )}
-        {selectedSeat && (
-          <Button onClick={handleCreateBooking} variant="contained">
-            Book Now
-          </Button>
-        )}
+        <Stack spacing={2} direction="row">
+          {selectedSeat && (
+            <Button
+              onClick={() => setSelectedSeat(null)}
+              color="error"
+              variant="outlined"
+            >
+              Clear
+            </Button>
+          )}
+          {selectedSeat && (
+            <Button onClick={handleCreateBooking} variant="contained">
+              Book Now
+            </Button>
+          )}
+        </Stack>
       </div>
     </div>
   );

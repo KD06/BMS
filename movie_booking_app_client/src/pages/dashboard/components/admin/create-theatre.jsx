@@ -14,13 +14,13 @@ const CreateTheatreTab = () => {
       <div style={{ width: "50%" }}>
         <CreateTheatreForm />
       </div>
-      <div style={{ width: "50%", padding: "10px" }}>
+      {/* <div style={{ width: "50%", padding: "10px" }}>
         {theatres?.map((theatre) => (
           <li style={{ listStyle: "none" }} key={theatre._id}>
             <pre>{JSON.stringify(theatre, null, 2)}</pre>
           </li>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -34,24 +34,63 @@ function CreateTheatreForm() {
   const [country, setCountry] = useState("");
   const [pinCode, setPincode] = useState("");
 
+  const [errors, setErrors] = useState({});
+
   const { mutateAsync: createTheatreAsync } = useCreateTheater();
+
+  const validate = () => {
+    const newErrors = {};
+    if (!name.trim() || name.trim().length < 2) {
+      newErrors.name = "Theatre name must be at least 2 characters";
+    }
+    if (!plot.trim()) newErrors.plot = "Plot is required";
+    if (!street.trim()) newErrors.street = "Street is required";
+    if (!city.trim()) newErrors.city = "City is required";
+    if (!state.trim()) newErrors.state = "State is required";
+    if (!country.trim()) newErrors.country = "Country is required";
+
+    if (!pinCode.trim()) {
+      newErrors.pinCode = "Pincode is required";
+    } else if (!/^\d{6}$/.test(pinCode)) {
+      newErrors.pinCode = "Pincode must be a 6-digit number";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await createTheatreAsync({
-      name,
-      plot,
-      street,
-      city,
-      state,
-      country,
-      pinCode: Number(pinCode),
-    });
+    if (!validate()) return;
+
+    try {
+      await createTheatreAsync({
+        name,
+        plot,
+        street,
+        city,
+        state,
+        country,
+        pinCode: Number(pinCode),
+      });
+
+      // Reset form on success
+      setName("");
+      setPlot("");
+      setStreet("");
+      setCity("");
+      setState("");
+      setCountry("");
+      setPincode("");
+      setErrors({});
+    } catch (err) {
+      console.error("Error creating theatre:", err);
+    }
   };
 
   return (
     <div>
-      <Box component="form" onSubmit={handleFormSubmit}>
+      <Box component="form" onSubmit={handleFormSubmit} noValidate>
         <div className="form-row">
           <TextField
             value={name}
@@ -59,6 +98,9 @@ function CreateTheatreForm() {
             fullWidth
             label="Theatre Name"
             required
+            error={!!errors.name}
+            helperText={errors.name}
+            sx={{ mb: 2 }}
           />
           <TextField
             value={plot}
@@ -66,6 +108,9 @@ function CreateTheatreForm() {
             fullWidth
             label="Plot Number"
             required
+            error={!!errors.plot}
+            helperText={errors.plot}
+            sx={{ mb: 2 }}
           />
           <TextField
             value={street}
@@ -73,6 +118,9 @@ function CreateTheatreForm() {
             fullWidth
             label="Street"
             required
+            error={!!errors.street}
+            helperText={errors.street}
+            sx={{ mb: 2 }}
           />
           <TextField
             value={city}
@@ -80,6 +128,9 @@ function CreateTheatreForm() {
             fullWidth
             label="City"
             required
+            error={!!errors.city}
+            helperText={errors.city}
+            sx={{ mb: 2 }}
           />
           <TextField
             value={state}
@@ -87,6 +138,9 @@ function CreateTheatreForm() {
             fullWidth
             label="State"
             required
+            error={!!errors.state}
+            helperText={errors.state}
+            sx={{ mb: 2 }}
           />
           <TextField
             value={country}
@@ -94,6 +148,9 @@ function CreateTheatreForm() {
             fullWidth
             label="Country"
             required
+            error={!!errors.country}
+            helperText={errors.country}
+            sx={{ mb: 2 }}
           />
           <TextField
             value={pinCode}
@@ -101,9 +158,12 @@ function CreateTheatreForm() {
             fullWidth
             label="Pincode"
             required
+            error={!!errors.pinCode}
+            helperText={errors.pinCode}
+            sx={{ mb: 2 }}
           />
         </div>
-        <Button variant="outlined" type="submit">
+        <Button variant="outlined" type="submit" sx={{ mt: 1 }}>
           Submit
         </Button>
       </Box>

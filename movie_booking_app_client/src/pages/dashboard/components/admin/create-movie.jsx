@@ -9,14 +9,14 @@ const CreateMovieTab = () => {
       <div style={{ width: "50%" }}>
         <CreateMovieForm />
       </div>
-      <div style={{ width: "50%", padding: "10px" }}>
+      {/* <div style={{ width: "50%", padding: "10px" }}>
         {movies &&
           movies.map((movie) => (
             <div key={movie._id}>
               <pre>{JSON.stringify(movie, null, 2)}</pre>
             </div>
           ))}
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -27,101 +27,115 @@ const CreateMovieForm = () => {
   const [language, setLanguage] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [durationInMinutes, setDurationInMinutes] = useState("");
+  const [errors, setErrors] = useState({});
 
   const { mutateAsync: createMovieAsync } = useCreateMovie();
 
+  const validate = () => {
+    const newErrors = {};
+    if (!title.trim() || title.length < 2)
+      newErrors.title = "Title must be at least 2 characters";
+    if (!language.trim() || language.length < 2)
+      newErrors.language = "Language must be at least 2 characters";
+    if (!imageURL.trim()) {
+      newErrors.imageURL = "Image URL is required";
+    } else {
+      try {
+        new URL(imageURL);
+      } catch {
+        newErrors.imageURL = "Enter a valid URL";
+      }
+    }
+    const duration = Number(durationInMinutes);
+    if (!durationInMinutes.trim()) {
+      newErrors.durationInMinutes = "Duration is required";
+    } else if (isNaN(duration) || duration <= 0) {
+      newErrors.durationInMinutes = "Duration must be a number greater than 0";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleCreateMovie = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     try {
-      const movieData = {
+      await createMovieAsync({
         title,
         description,
         language,
         imageURL,
         durationInMinutes: Number(durationInMinutes),
-      };
-      const filteredMovieData = Object.fromEntries(
-        // eslint-disable-next-line no-unused-vars
-        Object.entries(movieData).filter(([_, value]) => value)
-      );
-      await createMovieAsync(filteredMovieData);
+      });
+
+      // Reset form
       setTitle("");
       setDescription("");
       setLanguage("");
       setImageURL("");
       setDurationInMinutes("");
+      setErrors({});
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
-  const handleTitle = (e) => {
-    setTitle(e.target.value);
-  };
-  const handleDescription = (e) => {
-    setDescription(e.target.value);
-  };
-  const handleLanguage = (e) => {
-    setLanguage(e.target.value);
-  };
-  const handleImageURL = (e) => {
-    setImageURL(e.target.value);
-  };
-  const handleDurationInMinutes = (e) => {
-    setDurationInMinutes(e.target.value);
-  };
-
   return (
-    <div>
-      <Box component="form" onSubmit={handleCreateMovie}>
-        <div className="form-row">
-          <TextField
-            value={title}
-            onChange={handleTitle}
-            fullWidth
-            label="Title"
-            required
-          ></TextField>
-        </div>
-        <div className="form-row">
-          <TextField
-            value={description}
-            onChange={handleDescription}
-            fullWidth
-            label="Description"
-          ></TextField>
-        </div>
-        <div className="form-row">
-          <TextField
-            value={language}
-            onChange={handleLanguage}
-            fullWidth
-            label="Language"
-          ></TextField>
-        </div>
-        <div className="form-row">
-          <TextField
-            value={imageURL}
-            onChange={handleImageURL}
-            fullWidth
-            label="Image URL"
-          ></TextField>
-        </div>
-        <div className="form-row">
-          <TextField
-            value={durationInMinutes}
-            onChange={handleDurationInMinutes}
-            fullWidth
-            label="Duration In Minutes"
-          ></TextField>
-        </div>
-        <div className="form-row">
-          <Button fullWidth variant="contained" type="submit">
-            Create Movie
-          </Button>
-        </div>
-      </Box>
-    </div>
+    <Box component="form" onSubmit={handleCreateMovie} noValidate>
+      <TextField
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        fullWidth
+        label="Title"
+        required
+        error={!!errors.title}
+        helperText={errors.title}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        fullWidth
+        label="Description"
+        multiline
+        minRows={2}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        value={language}
+        onChange={(e) => setLanguage(e.target.value)}
+        fullWidth
+        label="Language"
+        required
+        error={!!errors.language}
+        helperText={errors.language}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        value={imageURL}
+        onChange={(e) => setImageURL(e.target.value)}
+        fullWidth
+        label="Image URL"
+        required
+        error={!!errors.imageURL}
+        helperText={errors.imageURL}
+        sx={{ mb: 2 }}
+      />
+      <TextField
+        value={durationInMinutes}
+        onChange={(e) => setDurationInMinutes(e.target.value)}
+        fullWidth
+        label="Duration In Minutes"
+        required
+        error={!!errors.durationInMinutes}
+        helperText={errors.durationInMinutes}
+        sx={{ mb: 2 }}
+      />
+      <Button fullWidth variant="contained" type="submit" sx={{ mt: 1 }}>
+        Create Movie
+      </Button>
+    </Box>
   );
 };
 

@@ -6,18 +6,18 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 }
-.seats_container span {
-  border: 1px solid;
+.seats_container button {
+  /* border: 1px solid; */
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 5px;
   border-radius: 5px;
   font-size: 15px;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
 }
-.seats_container span:hover {
+.seats_container button:hover {
   background-color: greenyellow;
 }
 .seats_container .selected-seat {
@@ -26,4 +26,11 @@
 }
 button {
   background: lightskyblue;
+}
+
+.selected-card {
+  border: 2px solid #1976d2;
+  background-color: #e3f2fd !important; /* Light blue background */
+  box-shadow: 0 0 10px rgba(25, 118, 210, 0.3);
+  transition: all 0.3s ease-in-out;
 }

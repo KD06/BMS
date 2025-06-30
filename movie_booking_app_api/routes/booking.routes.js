@@ -8,5 +8,6 @@ router.use(restrictToRole('user'))
 
 router.post('/create', controller.handleCreateBooking)
 router.post('/verify-payment', controller.verifyPayment)
+router.post('/booked-tickets', controller.getBookedSeatIds)
 
 module.exports = router

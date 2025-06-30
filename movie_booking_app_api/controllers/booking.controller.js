@@ -7,6 +7,7 @@ const Show = require('../models/theatre-hall-movie-mapping')
 const Hall = require('../models/theatre-halls.model')
 const Booking = require('../models/booking.model')
 const { hash } = require('../utils/hash')
+const BookingService = require('../services/booking.service')
 
 const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_API_KEY,
@@ -85,8 +86,8 @@ async function verifyPayment(req, res) {
     const paymentInfo = await razorpay.payments.fetch(paymentId)
     const { status, notes } = paymentInfo
 
-    if (status !== 'captured')
-        return res.status(400).json({ error: `Payment is not captured` })
+    // if (status !== 'captured')
+    //     return res.status(400).json({ error: `Payment is not captured` })
 
     const { seatNumber, showId } = notes
 
@@ -101,8 +102,15 @@ async function verifyPayment(req, res) {
 
         return res.status(201).json({ status: 'success' })
     } catch (err) {
-        return res.status(500).json({ status: 'success' })
+        // await razorpay.payments.refund(paymentId, {amount, speed: 'normal'})
+        return res.status(500).json({ status: 'Failure' })
     }
 }
 
-module.exports = { handleCreateBooking, verifyPayment }
+async function getBookedSeatIds(req, res) {
+    const id = req.params.id
+    const seats = await BookingService.getByShowId(id)
+
+    return res.json({ status: 'success', data: seats || [] })
+}
+module.exports = { handleCreateBooking, verifyPayment, getBookedSeatIds }

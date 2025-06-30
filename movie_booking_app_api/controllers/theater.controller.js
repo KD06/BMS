@@ -1,4 +1,5 @@
 const TheatreService = require('../services/theatre.service')
+const BookingService = require('../services/booking.service')
 const {
     createTheatreValidationSchema,
     createTheatreHallSchema,
@@ -80,6 +81,13 @@ async function createShow(req, res) {
 async function listShowsByMovieId(req, res) {
     const movieId = req.params.movieId
     const shows = await TheatreService.getShowsByMovieId(movieId)
+    const bookings = await BookingService.getByShowId(movieId)
+    console.log('#######', shows)
+    for (let i = 0; i < shows.length; i++) {
+        //         let booking = bookings.find(booking => booking.showId == shows[i].bookings){
+        // //
+        //         }
+    }
     return res.status(200).json({ data: shows })
 }
 
