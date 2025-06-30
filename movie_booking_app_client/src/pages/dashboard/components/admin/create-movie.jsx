@@ -1,6 +1,15 @@
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+} from "@mui/material";
 import { useState } from "react";
 import { useCreateMovie, useGetAllMovies } from "../../../../hooks/movie.hooks";
+import "./../../user.styles.css";
 
 const CreateMovieTab = () => {
   const { data: movies } = useGetAllMovies();
@@ -9,14 +18,29 @@ const CreateMovieTab = () => {
       <div style={{ width: "50%" }}>
         <CreateMovieForm />
       </div>
-      {/* <div style={{ width: "50%", padding: "10px" }}>
+      <div style={{ width: "50%", padding: "10px" }}>
         {movies &&
           movies.map((movie) => (
-            <div key={movie._id}>
-              <pre>{JSON.stringify(movie, null, 2)}</pre>
+            <div style={{ marginTop: "10px" }} key={movie._id}>
+              <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  component="img"
+                  height="194"
+                  image={movie.imageURL}
+                  alt="Image not Available"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {movie.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    {movie.description}
+                  </Typography>
+                </CardContent>
+              </Card>
             </div>
           ))}
-      </div> */}
+      </div>
     </div>
   );
 };

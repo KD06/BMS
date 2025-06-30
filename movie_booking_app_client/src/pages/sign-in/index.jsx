@@ -6,6 +6,7 @@ import "./style.css";
 import { useState, useEffect } from "react";
 
 import { useLoggedInUser, useSignin } from "../../hooks/auth.hooks";
+import SnackbarMessage from "../snackbar";
 
 const SigninPage = () => {
   const navigate = useNavigate();
@@ -16,9 +17,13 @@ const SigninPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
 
   useEffect(() => {
     if (loggedInUser) navigate("/dashboard");
@@ -28,7 +33,7 @@ const SigninPage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setSnackbar({ open: false, message: "", severity: "" });
     setEmailError("");
     setPasswordError("");
 
@@ -53,9 +58,17 @@ const SigninPage = () => {
       await signinAsync({ email, password });
     } catch (err) {
       if (err.response?.data?.message) {
-        setError(err.response.data.message);
+        setSnackbar({
+          open: true,
+          message: err.response.data.message,
+          severity: "error",
+        });
       } else {
-        setError("Invalid email or password");
+        setSnackbar({
+          open: true,
+          message: "Invalid email or password",
+          severity: "error",
+        });
       }
     }
   };
@@ -89,11 +102,6 @@ const SigninPage = () => {
               helperText={passwordError}
             />
           </div>
-          {error && (
-            <Typography variant="body1" color="error" sx={{ mb: 2 }}>
-              {error}
-            </Typography>
-          )}
           <div className="form-row">
             <Button type="submit" fullWidth variant="contained">
               Sign In
@@ -104,6 +112,14 @@ const SigninPage = () => {
           Don't have an account? <Link to="/sign-up">Sign up</Link>
         </Typography>
       </div>
+      <SnackbarMessage
+        handleClose={() =>
+          setSnackbar({ open: false, message: "", severity: "" })
+        }
+        message={snackbar.message}
+        open={snackbar.open}
+        severity={snackbar.severity}
+      />
     </div>
   );
 };

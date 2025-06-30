@@ -1,4 +1,13 @@
-import { Button } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
@@ -9,6 +18,7 @@ import {
   useGetTheaterHall,
 } from "../../../../hooks/theatre.hook";
 import { useGetAllMovies } from "../../../../hooks/movie.hooks";
+import "./../../user.styles.css";
 
 const CreateShowTab = () => {
   const [movieId, setMovieId] = useState(null);
@@ -24,6 +34,24 @@ const CreateShowTab = () => {
           <li style={{ listStyle: "none" }} key={show._id}>
             <pre>{JSON.stringify(show, null, 2)}</pre>
           </li>
+          <div style={{ marginTop: "10px" }} key={show._id}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {show?.theatreHallId?.theatreId?.name}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Seating Capacity: {show?.theatreHallId?.seatingCapacity}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Price: {show?.price}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Total seats Booked: {show?.selectedSeats.length}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
         ))}
       </div> */}
     </div>
@@ -95,32 +123,55 @@ function CreateShowForm({ movieId, setMovieId }) {
 
   return (
     <div>
-      <Box sx={{ mb: 2 }}>
-        <select value={movieId} onChange={(e) => setMovieId(e.target.value)}>
-          {movies?.map((e) => (
-            <option key={e._id} value={e._id}>
-              {e.title}
-            </option>
-          ))}
-        </select>
-        <select
-          value={theatreId}
-          onChange={(e) => setTheatreId(e.target.value)}
-        >
-          {theatres?.map((e) => (
-            <option key={e._id} value={e._id}>
-              {e.name}
-            </option>
-          ))}
-        </select>
-        {theatreId && (
-          <select value={hallId} onChange={(e) => setHallId(e.target.value)}>
-            {halls?.map((e) => (
-              <option key={e._id} value={e._id}>
-                {e.number} ({e.seatingCapacity})
-              </option>
+      <Box sx={{ mb: 2, display: "flex", gap: 2 }}>
+        <FormControl fullWidth>
+          <InputLabel id="movie-select-label">Movie</InputLabel>
+          <Select
+            labelId="movie-select-label"
+            value={movieId || ""}
+            label="Movie"
+            onChange={(e) => setMovieId(e.target.value)}
+          >
+            {movies?.map((movie) => (
+              <MenuItem key={movie._id} value={movie._id}>
+                {movie.title}
+              </MenuItem>
             ))}
-          </select>
+          </Select>
+        </FormControl>
+        <FormControl fullWidth variant="outlined">
+          <InputLabel id="theatre-select-label">Theatre</InputLabel>
+          <Select
+            labelId="theatre-select-label"
+            id="theatre-select"
+            value={theatreId || ""}
+            label="Theatre"
+            onChange={(e) => setTheatreId(e.target.value)}
+          >
+            {theatres?.map((theatre) => (
+              <MenuItem key={theatre._id} value={theatre._id}>
+                {theatre.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {theatreId && (
+          <FormControl fullWidth>
+            <InputLabel id="hall-select-label">Hall</InputLabel>
+            <Select
+              labelId="hall-select-label"
+              value={hallId || ""}
+              label="Hall"
+              onChange={(e) => setHallId(e.target.value)}
+            >
+              {halls?.map((hall) => (
+                <MenuItem key={hall._id} value={hall._id}>
+                  Hall {hall.number} ({hall.seatingCapacity} seats)
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         )}
       </Box>
 

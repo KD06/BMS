@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Card, CardContent, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import {
   useCreateTheater,
   useGetAllTheaters,
 } from "../../../../hooks/theatre.hook";
+import "./../../user.styles.css";
 
 const CreateTheatreTab = () => {
   const { data: theatres } = useGetAllTheaters();
@@ -14,13 +15,26 @@ const CreateTheatreTab = () => {
       <div style={{ width: "50%" }}>
         <CreateTheatreForm />
       </div>
-      {/* <div style={{ width: "50%", padding: "10px" }}>
+      <div style={{ width: "50%", padding: "10px" }}>
         {theatres?.map((theatre) => (
-          <li style={{ listStyle: "none" }} key={theatre._id}>
-            <pre>{JSON.stringify(theatre, null, 2)}</pre>
-          </li>
+          <div style={{ marginTop: "10px" }} key={theatre._id}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {theatre.name}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  {`${theatre.plot || ""},${theatre.street || ""}, ${
+                    theatre.city || ""
+                  }, ${theatre.state || ""}, ${theatre.country || ""} - ${
+                    theatre.pinCode || ""
+                  }`}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

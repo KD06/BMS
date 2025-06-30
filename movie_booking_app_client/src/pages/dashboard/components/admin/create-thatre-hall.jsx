@@ -1,4 +1,13 @@
-import { Button } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useState, useEffect } from "react";
@@ -7,6 +16,7 @@ import {
   useGetAllTheaters,
   useGetTheaterHall,
 } from "../../../../hooks/theatre.hook";
+import "./../../user.styles.css";
 
 const CreateTheatreHallTab = () => {
   const [theatreId, setTheatreId] = useState(null);
@@ -20,13 +30,22 @@ const CreateTheatreHallTab = () => {
           setTheatreId={setTheatreId}
         />
       </div>
-      {/* <div style={{ width: "50%", padding: "10px" }}>
+      <div style={{ width: "50%", padding: "10px" }}>
         {halls?.map((hall) => (
-          <li style={{ listStyle: "none" }} key={hall._id}>
-            <pre>{JSON.stringify(hall, null, 2)}</pre>
-          </li>
+          <div style={{ marginTop: "10px" }} key={hall._id}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {hall.number}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  {hall.seatingCapacity}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };
@@ -96,19 +115,23 @@ function CreateTheatreHallForm({ theatreId, setTheatreId }) {
 
   return (
     <div>
-      <select
-        value={theatreId || ""}
-        onChange={(e) => setTheatreId(e.target.value)}
-      >
-        <option value="" disabled>
-          Select Theatre
-        </option>
-        {theatres?.map((e) => (
-          <option key={e._id} value={e._id}>
-            {e.name}
-          </option>
-        ))}
-      </select>
+      <Box sx={{ mb: 2, display: "flex", gap: 2 }}>
+        <FormControl marginNormal>
+          <InputLabel id="movie-select-label">Select Theatre</InputLabel>
+          <Select
+            labelId="movie-select-label"
+            value={theatreId || ""}
+            label="Select Theatre"
+            onChange={(e) => setTheatreId(e.target.value)}
+          >
+            {theatres?.map((e) => (
+              <MenuItem key={e._id} value={e._id}>
+                {e.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
 
       <Box
         style={{ marginTop: "20px" }}

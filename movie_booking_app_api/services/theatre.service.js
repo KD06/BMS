@@ -5,6 +5,7 @@ const {
     createTheatreValidationSchema,
     createTheatreHallSchema,
 } = require('../lib/validators/theater.validator')
+const Booking = require('../models/booking.model')
 
 class TheatreService {
     /**
@@ -40,18 +41,35 @@ class TheatreService {
         return TheatreHallMovieMapping.create(data)
     }
 
-    static getShowsByMovieId(movieId) {
-        return TheatreHallMovieMapping.find({ movieId }).populate({
+    static async getShowsByMovieId(movieId) {
+        const shows = await TheatreHallMovieMapping.find({ movieId }).populate({
             path: 'theatreHallId',
             populate: [{ path: 'theatreId' }],
         })
-    }
 
-    static getShowsByMovieIdExtended(movieId) {
-        return TheatreHallMovieMapping.find({ movieId }).populate({
-            path: 'theatreHallId',
-            populate: [{ path: 'theatreId' }],
-        })
+        const showIds = shows.map((show) => show._id)
+        const bookings = await Booking.find({ showId: { $in: showIds } })
+
+        const bookingsByShowId = {}
+        for (const booking of bookings) {
+            const sid = booking.showId.toString()
+            if (!bookingsByShowId[sid]) {
+                bookingsByShowId[sid] = []
+            }
+
+            if (booking.seatNumber !== undefined) {
+                bookingsByShowId[sid].push(booking.seatNumber)
+            }
+            const enrichedShows = shows.map((show) => {
+                const sid = show._id.toString()
+                return {
+                    ...show.toObject(),
+                    selectedSeats: bookingsByShowId[sid] || [],
+                }
+            })
+
+            return enrichedShows
+        }
     }
 }
 
