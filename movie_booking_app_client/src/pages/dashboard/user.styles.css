@@ -24,6 +24,10 @@
   background-color: green;
   color: white;
 }
+.seats_container .booked-seat {
+  background-color: darkgrey;
+  color: #fff !important;
+}
 button {
   background: lightskyblue;
 }
@@ -33,4 +37,9 @@ button {
   background-color: #e3f2fd !important; /* Light blue background */
   box-shadow: 0 0 10px rgba(25, 118, 210, 0.3);
   transition: all 0.3s ease-in-out;
+}
+
+.shows,
+.seatMap {
+  margin-top: 86px;
 }

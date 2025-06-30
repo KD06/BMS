@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./style.css";
 import { useState, useEffect, useMemo } from "react";
 import { useLoggedInUser, useSignup } from "../../hooks/auth.hooks";
+import SnackbarMessage from "../snackbar";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,11 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [error, setError] = useState("");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "",
+  });
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -47,7 +52,7 @@ const SignupPage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setSnackbar({ open: false, message: "", severity: "" });
     setFirstnameError("");
     setLastnameError("");
     setEmailError("");
@@ -105,9 +110,17 @@ const SignupPage = () => {
       await signupAsync({ firstname, lastname, email, password });
     } catch (err) {
       if (err.response?.data?.message) {
-        setError(err.response.data.message);
+        setSnackbar({
+          open: true,
+          message: err.response.data.message,
+          severity: "error",
+        });
       } else {
-        setError("Sign up failed. Please try again.");
+        setSnackbar({
+          open: true,
+          message: "Sign up failed. Please try again.",
+          severity: "error",
+        });
       }
     }
   };
@@ -170,11 +183,6 @@ const SignupPage = () => {
               helperText={confirmPasswordError}
             />
           </div>
-          {error && (
-            <Typography variant="body1" color="error" sx={{ mb: 2 }}>
-              {error}
-            </Typography>
-          )}
           <div className="form-row">
             <Button
               type="submit"
@@ -191,6 +199,14 @@ const SignupPage = () => {
           Already have an account? <Link to="/sign-in">Sign in</Link>
         </Typography>
       </div>
+      <SnackbarMessage
+        handleClose={() =>
+          setSnackbar({ open: false, message: "", severity: "" })
+        }
+        message={snackbar.message}
+        open={snackbar.open}
+        severity={snackbar.severity}
+      />
     </div>
   );
 };
